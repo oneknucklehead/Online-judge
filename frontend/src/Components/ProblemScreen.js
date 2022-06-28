@@ -7,18 +7,25 @@ import qs from 'qs'
 const ProblemScreen = ({ match }) => {
   const [problem, setProblem] = useState({})
   const [loading, setLoading] = useState(false)
+  const [outputLoading, setOutputLoading] = useState(false)
   const [code, setCode] = useState('')
+  const [language, setLanguage] = useState('py')
+  const [input, setInput] = useState('')
   // const [payload, setPayload] = useState({})
-  // const [output, setOutput] = useState('')
+  const [output, setOutput] = useState('')
 
   const handleSubmit = async () => {
+    setOutput('')
+    setOutputLoading(true)
     let data = qs.stringify({
-      code: 'import java.util.Scanner;\npublic class MatSym {\n    public static void main(String[]args) {\n       Scanner in = new Scanner(System.in);\nSystem.out.println(in.nextLine());\nSystem.out.println(in.nextLine());\n    }\n}',
-      language: 'java',
-      input: 'Hello\nWorld',
+      code: code,
+      language: language,
+      input: input,
     })
     const response = await axios.post('https://codex-api.herokuapp.com/', data)
     console.log(JSON.stringify(response.data.output))
+    setOutput(JSON.stringify(response.data.output))
+    setOutputLoading(false)
   }
 
   useEffect(() => {
@@ -58,9 +65,13 @@ const ProblemScreen = ({ match }) => {
               </p>
             </Col>
             <Col className='md-6'>
-              <select>
-                <option>python</option>
-                <option>java</option>
+              <label htmlFor='language'>Language:</label>
+              <select
+                value={language}
+                onChange={(e) => setLanguage(e.target.value)}
+              >
+                <option value='py'>Python</option>
+                <option value='java'>Java</option>
               </select>
 
               <textarea
@@ -71,9 +82,21 @@ const ProblemScreen = ({ match }) => {
                   setCode(e.target.value)
                 }}
               ></textarea>
-              <br />
+              <div>Input (if any):</div>
+              <textarea
+                rows='1'
+                cols='75'
+                value={input}
+                onChange={(e) => {
+                  setInput(e.target.value)
+                }}
+              ></textarea>
+              <div>Output:</div>
+              <div>
+                {outputLoading && <Loader />}
+                {output}
+              </div>
               <button onClick={() => handleSubmit()}>Submit</button>
-              <p>{problem.code}</p>
             </Col>
           </Row>
         </>

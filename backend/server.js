@@ -2,8 +2,6 @@ import express from 'express'
 import dotenv from 'dotenv'
 import connectDB from './config/dbconfig.js'
 import problemRoutes from './routes/problemsRoute.js'
-import generateFile from './generateFile.js'
-import executeJs from './executeJS.js'
 import cors from 'cors'
 
 dotenv.config()
