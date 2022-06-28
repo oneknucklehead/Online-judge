@@ -31,22 +31,6 @@ app.get('/', (req, res) => {
 })
 app.use('/api/problems', problemRoutes)
 
-app.post('/run', async (req, res) => {
-  const { code } = req.body
-  console.log('code:' + code)
-  if (code === undefined) {
-    return res.status(400).json({ success: false, error: 'Empty code body!' })
-  }
-  try {
-    const filepath = await generateFile(code)
-    console.log('filepath:' + filepath)
-    const output = await executeJs(filepath)
-    res.status(201).json({ filepath, output })
-  } catch (error) {
-    console.error(error)
-  }
-})
-
 const PORT = process.env.PORT || 5000
 
 app.listen(

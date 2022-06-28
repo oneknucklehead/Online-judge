@@ -1,7 +1,8 @@
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
-import { Col, Row } from 'react-bootstrap'
+import { Badge, Col, ListGroup, Row } from 'react-bootstrap'
 import Loader from './Loader'
+import qs from 'qs'
 
 const ProblemScreen = ({ match }) => {
   const [problem, setProblem] = useState({})
@@ -11,11 +12,13 @@ const ProblemScreen = ({ match }) => {
   // const [output, setOutput] = useState('')
 
   const handleSubmit = async () => {
-    // setPayload({
-    //   code,
-    // })
-    const { data } = await axios.post('http://localhost:5000/run', { code })
-    // console.log('data:' + data)
+    let data = qs.stringify({
+      code: 'import java.util.Scanner;\npublic class MatSym {\n    public static void main(String[]args) {\n       Scanner in = new Scanner(System.in);\nSystem.out.println(in.nextLine());\nSystem.out.println(in.nextLine());\n    }\n}',
+      language: 'java',
+      input: 'Hello\nWorld',
+    })
+    const response = await axios.post('https://codex-api.herokuapp.com/', data)
+    console.log(JSON.stringify(response.data.output))
   }
 
   useEffect(() => {
@@ -37,13 +40,26 @@ const ProblemScreen = ({ match }) => {
         <>
           <Row>
             <Col className='md-6'>
-              <h3>{problem.name}</h3>
+              <ListGroup.Item>{problem.name}</ListGroup.Item>
               <p>{problem.statement}</p>
-              <p>Difficulty: {problem.difficulty}</p>
+              <p>
+                Difficulty:{' '}
+                <Badge
+                  bg={
+                    problem.difficulty === 'hard'
+                      ? 'primary'
+                      : problem.difficulty === 'medium'
+                      ? 'warning'
+                      : 'success'
+                  }
+                >
+                  {problem.difficulty}
+                </Badge>
+              </p>
             </Col>
             <Col className='md-6'>
               <select>
-                <option>javascript</option>
+                <option>python</option>
                 <option>java</option>
               </select>
 
@@ -57,9 +73,6 @@ const ProblemScreen = ({ match }) => {
               ></textarea>
               <br />
               <button onClick={() => handleSubmit()}>Submit</button>
-              {/* <p>{status}</p>
-      <p>{jobId ? `Job ID: ${jobId}` : ""}</p>
-      <p>{renderTimeDetails()}</p> */}
               <p>{problem.code}</p>
             </Col>
           </Row>
