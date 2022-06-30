@@ -5,6 +5,7 @@ import problemRoutes from './routes/problemsRoute.js'
 import cors from 'cors'
 import generateFile from './utils/generateFile.js'
 import executeJavascript from './utils/executeJavascript.js'
+import removedFile from './utils/removeFile.js'
 dotenv.config()
 connectDB()
 
@@ -47,6 +48,9 @@ app.post('/api/run', async (req, res) => {
   console.log(fileName)
   output = await executeJavascript(fileName, input)
   // const { language, code } = req.body
+  console.log(output)
+  const removedFileResult = removedFile(fileName)
+  console.log(removedFileResult)
   res.send(output)
 })
 
