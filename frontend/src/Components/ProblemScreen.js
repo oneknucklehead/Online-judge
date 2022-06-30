@@ -9,23 +9,29 @@ const ProblemScreen = ({ match }) => {
   const [loading, setLoading] = useState(false)
   const [outputLoading, setOutputLoading] = useState(false)
   const [code, setCode] = useState('')
-  const [language, setLanguage] = useState('py')
+  const [language, setLanguage] = useState('js')
   const [input, setInput] = useState('')
   // const [payload, setPayload] = useState({})
   const [output, setOutput] = useState('')
 
   const handleSubmit = async () => {
-    setOutput('')
-    setOutputLoading(true)
-    let data = qs.stringify({
+    // setOutput('')
+    // setOutputLoading(true)
+    // let data = qs.stringify({
+    //   code: code,
+    //   language: language,
+    //   input: input,
+    // })
+    // const response = await axios.post('https://codex-api.herokuapp.com/', data)
+    // console.log(JSON.stringify(response.data.output))
+    // setOutput(JSON.stringify(response.data.output))
+    // setOutputLoading(false)
+    let dataPost = qs.stringify({
       code: code,
       language: language,
-      input: input,
     })
-    const response = await axios.post('https://codex-api.herokuapp.com/', data)
-    console.log(JSON.stringify(response.data.output))
-    setOutput(JSON.stringify(response.data.output))
-    setOutputLoading(false)
+    const { data } = await axios.post('http://localhost:5000/api/run', dataPost)
+    console.log(data)
   }
 
   useEffect(() => {
@@ -70,7 +76,7 @@ const ProblemScreen = ({ match }) => {
                 value={language}
                 onChange={(e) => setLanguage(e.target.value)}
               >
-                <option value='py'>Python</option>
+                <option value='js'>JavaScript</option>
                 <option value='java'>Java</option>
               </select>
 

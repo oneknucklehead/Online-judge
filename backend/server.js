@@ -3,7 +3,8 @@ import dotenv from 'dotenv'
 import connectDB from './config/dbconfig.js'
 import problemRoutes from './routes/problemsRoute.js'
 import cors from 'cors'
-
+import generateFile from './utils/generateFile.js'
+import executeJavascript from './utils/executeJavascript.js'
 dotenv.config()
 connectDB()
 
@@ -27,6 +28,28 @@ app.use(function (req, res, next) {
 app.get('/', (req, res) => {
   res.send('API is running...')
 })
+
+app.post('/api/run', async (req, res) => {
+  let output = ''
+  //input will be my testcases input
+  let input = ''
+  const languageSupp = ['js']
+
+  const { language, code } = req.body
+  if (code === undefined || code.trim() === '') {
+    output = 'Enter a valid code to be executed'
+  }
+  if (!languageSupp.includes(language)) {
+    output = `Language ${language} not supported`
+  }
+  console.log(language + ' ' + code)
+  const fileName = generateFile(language, code)
+  console.log(fileName)
+  output = await executeJavascript(fileName, input)
+  // const { language, code } = req.body
+  res.send(output)
+})
+
 app.use('/api/problems', problemRoutes)
 
 const PORT = process.env.PORT || 5000
