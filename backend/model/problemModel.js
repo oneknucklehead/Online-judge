@@ -18,6 +18,10 @@ const problemSchema = mongoose.Schema(
       type: String,
       required: true,
     },
+    numberOfInputs: {
+      type: Number,
+      required: true,
+    },
   },
   {
     timestamps: true,

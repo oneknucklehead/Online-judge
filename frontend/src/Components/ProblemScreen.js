@@ -26,9 +26,12 @@ const ProblemScreen = ({ match }) => {
     // console.log(JSON.stringify(response.data.output))
     // setOutput(JSON.stringify(response.data.output))
     // setOutputLoading(false)
+
     let dataPost = qs.stringify({
       code: code,
       language: language,
+      problemId: match.params.id,
+      // input: input,
     })
     const { data } = await axios.post('http://localhost:5000/api/run', dataPost)
     console.log(data)
@@ -41,6 +44,7 @@ const ProblemScreen = ({ match }) => {
         `http://localhost:5000/api/problems/${match.params.id}`
       )
       setProblem(data)
+      setCode(`${data.code}`)
       setLoading(false)
     }
     fetchProblem()

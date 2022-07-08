@@ -1,35 +1,13 @@
 const problems = [
   {
-    statement: 'this is the problem statement',
-    name: 'this is the problem name',
-    code: `var twoSum = function(nums, target) {
-        
-      };`,
-    difficulty: 'hard',
-  },
-  {
-    statement: 'two sum problem statement to be added here',
-    name: 'two sum',
+    statement:
+      'Given an array of integers nums and an integer target, return indices of the two numbers such that they add up to target. You may assume that each input would have exactly one solution, and you may not use the same element twice.You can return the answer in any order.',
+    name: 'Two Sum',
     code: `var twoSum = function(nums, target) {
         
       };`,
     difficulty: 'easy',
-  },
-  {
-    statement: 'two sum problem statement to be added here',
-    name: 'two sum',
-    code: `var twoSum = function(nums, target) {
-        
-      };`,
-    difficulty: 'easy',
-  },
-  {
-    statement: 'two sum problem statement to be added here',
-    name: 'two sum',
-    code: `var twoSum = function(nums, target) {
-        
-      };`,
-    difficulty: 'easy',
+    numberOfInputs: 2,
   },
 ]
 

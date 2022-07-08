@@ -1,25 +1,34 @@
 import mongoose from 'mongoose'
 
 const testcaseSchema = mongoose.Schema({
-  exampleInput: {
-    type: String,
-    required: true,
-  },
-  exampleOutput: {
-    type: String,
-    required: true,
-  },
   input: {
-    type: String,
-    required: true,
+    sampleInputs: {
+      type: Array,
+      default: [],
+      required: true,
+    },
+    testInputs: {
+      type: Array,
+      default: [],
+      required: true,
+    },
   },
   output: {
-    type: String,
-    required: true,
+    sampleOutputs: {
+      type: Array,
+      default: [],
+      required: true,
+    },
+    testOutputs: {
+      type: Array,
+      default: [],
+      required: true,
+    },
   },
   problem: {
     type: mongoose.Schema.Types.ObjectId,
     required: true,
+    ref: 'Problems',
   },
 })
 

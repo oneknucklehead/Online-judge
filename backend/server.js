@@ -5,7 +5,9 @@ import problemRoutes from './routes/problemsRoute.js'
 import cors from 'cors'
 import generateFile from './utils/generateFile.js'
 import executeJavascript from './utils/executeJavascript.js'
-import removedFile from './utils/removeFile.js'
+import removeFile from './utils/removeFile.js'
+import Testcases from './model/testcaseModel.js'
+import Problems from './model/problemModel.js'
 dotenv.config()
 connectDB()
 
@@ -31,26 +33,74 @@ app.get('/', (req, res) => {
 })
 
 app.post('/api/run', async (req, res) => {
-  let output = ''
-  //input will be my testcases input
+  let output = {}
   let input = ''
+  //input will be my testcases input
+
+  // let input = ''
   const languageSupp = ['js']
 
-  const { language, code } = req.body
+  const { language, code, problemId } = req.body
+  //check for test cases
+  const testcases = await Testcases.find({ problem: problemId })
+  const problem = await Problems.findById(problemId)
+
   if (code === undefined || code.trim() === '') {
     output = 'Enter a valid code to be executed'
   }
   if (!languageSupp.includes(language)) {
     output = `Language ${language} not supported`
   }
-  console.log(language + ' ' + code)
   const fileName = generateFile(language, code)
   console.log(fileName)
-  output = await executeJavascript(fileName, input)
+  let testpassed = []
+  const len = testcases[0]?.input.testInputs.length
+  let k = 0
+  const { twoSum } = await import(`./codes/${fileName}`)
+  for (let i = 0; i < len; i += problem.numberOfInputs) {
+    input = testcases[0]?.input?.testInputs.splice(0, problem.numberOfInputs)
+    const output = JSON.stringify(twoSum(...input))
+    const answer =
+      output.localeCompare(
+        JSON.stringify(testcases[0]?.output.testOutputs[k])
+      ) === 0
+    testpassed.push(answer)
+    k++
+    // import(`./codes/${fileName}`).then((f) => {
+    //   input = testcases[0]?.input?.testInputs.splice(0, problem.numberOfInputs)
+    //   console.log('result: _____________________________')
+    //   console.log(
+    //     JSON.stringify(f.default(...input)).localeCompare(
+    //       JSON.stringify(testcases[0]?.output.testOutputs[k])
+    //     ) === 0
+    //   )
+    //   answer =
+    //     JSON.stringify(f.default(...input)).localeCompare(
+    //       JSON.stringify(testcases[0]?.output.testOutputs[k])
+    //     ) === 0
+    //   console.log('answer: ', answer)
+    //   testpassed[k] = answer
+    //   console.log('op: ' + f.default(...input))
+    //   console.log('test op: ' + testcases[0]?.output.testOutputs[k])
+    //   k++
+    // })
+  }
+  console.log('testpassed: ' + testpassed)
+
+  // testcases[0]?.output.testOutputs.forEach((testOutput) => {
+  //   // if (testOutput == outputs[0]) {
+  //   //   testcasesPassed.push(true)
+  //   //   outputs.shift()
+  //   // }
+  //   console.log('testOP: ' + testOutput)
+  // })
+  // console.log(typeof input)
+  // console.log(...input)
+
   // const { language, code } = req.body
-  console.log(output)
-  const removedFileResult = removedFile(fileName)
-  console.log(removedFileResult)
+  // console.log(output)
+  // const removedFileResult = removeFile(fileName)
+  // console.log(removedFileResult)
   res.send(output)
 })
 

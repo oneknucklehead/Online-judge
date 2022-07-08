@@ -13,7 +13,10 @@ const createFile = (language, code) => {
   const fileName = `${fileId}.${language}`
   fs.writeFileSync(
     path.join(__dirname, '..', 'codes', `${fileName}`),
-    code?.toString()
+    code?.toString() +
+      `
+    export {twoSum}
+    `
   )
   return fileName
 }
