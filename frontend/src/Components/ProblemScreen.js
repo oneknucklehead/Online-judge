@@ -10,30 +10,34 @@ const ProblemScreen = ({ match }) => {
   const [outputLoading, setOutputLoading] = useState(false)
   const [code, setCode] = useState('')
   const [language, setLanguage] = useState('js')
-  const [input, setInput] = useState('')
-  // const [payload, setPayload] = useState({})
   const [output, setOutput] = useState('')
 
-  const handleSubmit = async () => {
-    // setOutput('')
-    // setOutputLoading(true)
-    // let data = qs.stringify({
-    //   code: code,
-    //   language: language,
-    //   input: input,
-    // })
-    // const response = await axios.post('https://codex-api.herokuapp.com/', data)
-    // console.log(JSON.stringify(response.data.output))
-    // setOutput(JSON.stringify(response.data.output))
-    // setOutputLoading(false)
-
+  const handleRun = async () => {
     let dataPost = qs.stringify({
       code: code,
       language: language,
       problemId: match.params.id,
       // input: input,
     })
-    const { data } = await axios.post('http://localhost:5000/api/run', dataPost)
+    const { data } = await axios.post(
+      'http://localhost:5000/api/test/run',
+      dataPost
+    )
+    console.log(data)
+    setOutput({ ...data })
+  }
+
+  const handleSubmit = async () => {
+    let dataPost = qs.stringify({
+      code: code,
+      language: language,
+      problemId: match.params.id,
+      // input: input,
+    })
+    const { data } = await axios.post(
+      'http://localhost:5000/api/test/submit',
+      dataPost
+    )
     console.log(data)
   }
 
@@ -92,20 +96,28 @@ const ProblemScreen = ({ match }) => {
                   setCode(e.target.value)
                 }}
               ></textarea>
-              <div>Input (if any):</div>
-              <textarea
-                rows='1'
-                cols='75'
-                value={input}
-                onChange={(e) => {
-                  setInput(e.target.value)
-                }}
-              ></textarea>
-              <div>Output:</div>
-              <div>
-                {outputLoading && <Loader />}
-                {output}
-              </div>
+              {outputLoading ? (
+                <Loader />
+              ) : (
+                <>
+                  <div>Your Input:</div>
+                  <div>
+                    {outputLoading && <Loader />}
+                    {output && output?.yourInput.toString()}
+                  </div>
+                  <div>Output:</div>
+                  <div>
+                    {outputLoading && <Loader />}
+                    {output && output?.yourOutput.toString()}
+                  </div>
+                  <div>Expected:</div>
+                  <div>
+                    {outputLoading && <Loader />}
+                    {output && output?.expected.toString()}
+                  </div>
+                </>
+              )}
+              <button onClick={() => handleRun()}>Run</button>
               <button onClick={() => handleSubmit()}>Submit</button>
             </Col>
           </Row>

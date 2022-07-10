@@ -6,6 +6,7 @@ const problems = [
     code: `var twoSum = function(nums, target) {
         
       };`,
+    functionName: 'twoSum',
     difficulty: 'easy',
     numberOfInputs: 2,
   },

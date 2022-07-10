@@ -14,6 +14,10 @@ const problemSchema = mongoose.Schema(
       type: String,
       required: true,
     },
+    functionName: {
+      type: String,
+      required: true,
+    },
     difficulty: {
       type: String,
       required: true,

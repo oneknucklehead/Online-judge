@@ -1,5 +1,4 @@
 import express from 'express'
-// import problems from '../data/problems.js'
 import Problems from '../model/problemModel.js'
 import asyncHandler from 'express-async-handler'
 
