@@ -26,6 +26,21 @@ const problemSchema = mongoose.Schema(
       type: Number,
       required: true,
     },
+    examples: [
+      {
+        Input: {
+          type: String,
+          required: true,
+        },
+        Output: {
+          type: String,
+          required: true,
+        },
+        Explanation: {
+          type: String,
+        },
+      },
+    ],
   },
   {
     timestamps: true,

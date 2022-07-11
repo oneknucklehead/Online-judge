@@ -19,7 +19,7 @@ router.post(
     //check for test cases
     const testcases = await Testcases.find({ problem: problemId })
     const problem = await Problems.findById(problemId)
-
+    // JSON.parse(JSON.stringify(testcases[0]?.input.sampleInputs))
     const deepcopyInput =
       testcases && JSON.parse(JSON.stringify(testcases[0]?.input.sampleInputs))
     const deepcopyOutput =

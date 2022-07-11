@@ -17,9 +17,14 @@ const submitFile = async (language, code, problem, testcases) => {
   try {
     for (let i = 0; i < len; i += problem.numberOfInputs) {
       let input = toTestInputs.splice(0, problem.numberOfInputs)
-      let output = ''
-      output = JSON.stringify(testfunc.default(...input))
-
+      const output = await new Promise((resolve, reject) => {
+        if (toTestInputs) {
+          resolve(JSON.stringify(testfunc.default(...input)))
+        }
+        setTimeout(() => {
+          reject(`Error:TLE`)
+        }, 8000)
+      })
       yourOutput.push(output)
       const answer =
         output.localeCompare(
@@ -28,23 +33,32 @@ const submitFile = async (language, code, problem, testcases) => {
       testpassed.push(answer)
       k++
     }
-  } catch (err) {
+    const removedFileResult = removeFile(fileName)
     return {
-      ...err,
+      success: true,
+      generated: {
+        filePath: fileName,
+      },
+      removed: {
+        ...removedFileResult,
+      },
+      yourOutput,
+      testpassed,
     }
-  }
-
-  //removing the generated file
-  const removedFileResult = removeFile(fileName)
-  return {
-    generated: {
-      filePath: fileName,
-    },
-    removed: {
-      removedFileResult,
-    },
-    yourOutput,
-    testpassed,
+  } catch (err) {
+    const removedFileResult = removeFile(fileName)
+    return {
+      success: false,
+      generated: {
+        filePath: fileName,
+      },
+      removed: {
+        ...removedFileResult,
+      },
+      err,
+      yourOutput,
+      testpassed,
+    }
   }
 }
 

@@ -8,12 +8,12 @@ const removeFile = (fileLocation) => {
   try {
     fs.rmSync(path.join(__dirname, '..', 'codes', fileLocation))
     return {
-      removed: true,
+      success: true,
       path: `${path.join(__dirname, '..', 'codes', fileLocation)}`,
     }
   } catch (err) {
     return {
-      removed: false,
+      success: false,
       error: err,
     }
   }

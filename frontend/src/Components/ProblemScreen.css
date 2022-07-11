@@ -1,0 +1,96 @@
+.problem-title {
+  font-size: 20px;
+  font-weight: bold;
+}
+.example-header {
+  font-size: 14px;
+  font-weight: bold;
+}
+.example-container {
+  background: #f7f9fa;
+  font-size: 14px;
+  padding: 10px 15px;
+  margin: 0 10px;
+  border-radius: 5px;
+}
+.example-container > div > p {
+  display: inline;
+  font-weight: bold;
+}
+.scroll {
+  margin: 4px, 4px;
+  padding: 4px;
+  background-color: #f2f2f2;
+  height: 60px;
+  overflow-x: hidden;
+  overflow-y: auto;
+  text-align: justify;
+  border: 0.5px solid #d9d9d9;
+  border-radius: 3px;
+}
+::-webkit-scrollbar {
+  width: 7px;
+}
+
+/* .scroll::-webkit-scrollbar-track {
+  background-color: darkgrey;
+} */
+
+::-webkit-scrollbar-thumb {
+  background-color: #d9d9d9;
+}
+.code-area {
+  border: 0.5px solid #d9d9d9;
+  border-radius: 3px;
+  outline: none;
+}
+/* .scroll::-webkit-scrollbar-thumb {
+  background-image: linear-gradient(180deg, #d0368a 0%, #708ad4 99%);
+  box-shadow: inset 2px 2px 5px 0 rgba(#fff, 0.5);
+  border-radius: 100px;
+} */
+.output-container {
+  font-size: 14px;
+}
+.button-container {
+  margin: 20px 0 0;
+  display: flex;
+  justify-content: flex-end;
+}
+.outlined {
+  display: flex;
+  background: none;
+  border: 0.5px solid #d9d9d9;
+  border-radius: 3px;
+  justify-content: space-evenly;
+  align-items: center;
+  width: 5rem;
+  color: #455a64;
+  margin: 0 16px 0 0;
+  font-size: 14px;
+  transition: 0.18s all ease-in-out;
+}
+.outlined:hover {
+  background: #f2f2f2;
+  border: 0.5px solid #000;
+  transition: 0.18s all ease-in-out;
+}
+.not-outlined {
+  background: #455a64;
+  border: none;
+  color: #fff;
+  border-radius: 3px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 5rem;
+  font-size: 14px;
+  border: 0.5px solid #455a64;
+
+  transition: 0.18s all ease-in-out;
+}
+.not-outlined:hover {
+  background: #556f7b;
+  border: 0.5px solid #556f7b;
+  transition: 0.18s all ease-in-out;
+}
