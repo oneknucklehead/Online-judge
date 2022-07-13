@@ -16,10 +16,10 @@ const importData = async () => {
 
     const createdProblems = await Problem.insertMany(problems)
     const baseId = createdProblems[0]._id
-    const sampleTestcases = testcases.map((testcase) => {
-      return { ...testcase, problem: baseId }
-    })
-    await Testcases.insertMany(sampleTestcases)
+    for (let i = 0; i < createdProblems.length; i++) {
+      testcases[i] = { ...testcases[i], problem: createdProblems[i]._id }
+    }
+    await Testcases.insertMany(testcases)
     console.log('Data imported successfully!')
     process.exit()
   } catch (error) {

@@ -67,6 +67,7 @@
   width: 5rem;
   color: #455a64;
   margin: 0 16px 0 0;
+  padding: 5px;
   font-size: 14px;
   transition: 0.18s all ease-in-out;
 }
@@ -79,6 +80,7 @@
   background: #455a64;
   border: none;
   color: #fff;
+  padding: 5px;
   border-radius: 3px;
   display: flex;
   align-items: center;

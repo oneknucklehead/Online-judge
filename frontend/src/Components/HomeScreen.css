@@ -1,13 +1,118 @@
-.probContainer {
+.hero-container {
+  width: auto;
+  height: 80vh;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
+  margin-top: 20px;
 }
-.probName {
-  color: #000000;
-  transition: all 0.2s ease-in-out;
+.hero-container > h1 {
+  font-size: 5rem;
+  font-weight: 900;
 }
-.probName:hover {
-  color: blue;
-  transition: all 0.2s ease-in-out;
+.hero-container > h1 > span {
+  font-size: 5rem;
+  font-weight: 900;
+  display: inline-block;
+  text-transform: uppercase;
+  background-image: -webkit-linear-gradient(
+    45deg,
+    #ee7752,
+    #e73c7e,
+    #23a6d5,
+    #23d5ab
+  );
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: waviy 1s infinite;
+}
+
+@keyframes waviy {
+  0%,
+  50%,
+  100% {
+    transform: translateY(0);
+  }
+  20% {
+    transform: translateY(-20px);
+  }
+}
+.hero-container > p {
+  font-size: 1.5rem;
+  /* color: #000;
+  font-family: 'montserrat';
+  font-weight: bold;
+  max-width: 700px;
+  text-align: center;
+  background: rgba(255, 253, 160, 1);
+  background: -webkit-linear-gradient(
+      left,
+      #00ffff 0%,
+      #97fba0 25%,
+      #97b1fb 50%,
+      #00ffff 100%
+    )
+    repeat;
+  -webkit-background-clip: text;
+  -ms-background-clip: text;
+  -moz-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  -ms-text-fill-color: transparent;
+  -moz-text-fill-color: transparent;
+  text-fill-color: transparent;
+  -webkit-animation-name: masked-animation;
+  -webkit-animation-duration: 50s;
+  -webkit-animation-iteration-count: infinite;
+  -webkit-animation-timing-function: linear; */
+}
+
+/* @-webkit-keyframes masked-animation {
+  0% {
+    background-position: 0 0;
+  }
+  100% {
+    background-position: -8000px -3000px;
+  }
+} */
+
+.wavy-underline {
+  text-decoration: underline;
+  -webkit-text-decoration-color: salmon;
+  text-decoration-color: salmon;
+  -webkit-text-decoration-style: wavy;
+  text-decoration-style: wavy;
+}
+.fancy {
+  -webkit-text-decoration: hotpink double underline;
+  text-decoration: hotpink double underline;
+}
+.btn1 {
+  border-radius: 8px;
+  padding: 0.5rem 1rem;
+  margin: 0 1rem 0 0;
+  background: none;
+  border: 0.5px solid #d9d9d9;
+  font-size: 14px;
+  transition: 0.18s all ease-in-out;
+}
+.btn1:hover {
+  background: #f2f2f2;
+  border: 0.5px solid #000;
+  transition: 0.18s all ease-in-out;
+}
+.btn2 {
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  background: #455a64;
+  border: none;
+
+  font-size: 14px;
+  border: 0.5px solid #455a64;
+  transition: 0.18s all ease-in-out;
+}
+.btn2:hover {
+  background: #556f7b;
+  transition: 0.18s all ease-in-out;
 }

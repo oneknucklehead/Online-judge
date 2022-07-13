@@ -123,16 +123,16 @@ const ProblemScreen = ({ match }) => {
               >
                 <option value='js'>JavaScript</option>
               </select>
-
-              <textarea
-                className='code-area'
-                rows='20'
-                cols='73'
-                value={code}
-                onChange={(e) => {
-                  setCode(e.target.value)
-                }}
-              ></textarea>
+              <Row>
+                <textarea
+                  className='code-area'
+                  rows='20'
+                  value={code}
+                  onChange={(e) => {
+                    setCode(e.target.value)
+                  }}
+                ></textarea>
+              </Row>
               {outputLoading ? (
                 <Loader />
               ) : (

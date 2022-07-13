@@ -2,10 +2,6 @@ import mongoose from 'mongoose'
 
 const solutionSchema = mongoose.Schema(
   {
-    filePath: {
-      type: String,
-      required: true,
-    },
     problem: {
       type: mongoose.Schema.Types.ObjectId,
       required: true,
