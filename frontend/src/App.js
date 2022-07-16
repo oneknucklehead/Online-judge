@@ -5,6 +5,7 @@ import { BrowserRouter as Router, Route } from 'react-router-dom'
 import JudgeScreen from './Components/JudgeScreen'
 import ProblemScreen from './Components/ProblemScreen'
 import HomeScreen from './Components/HomeScreen'
+import CompilerScreen from './Components/CompilerScreen'
 
 const App = () => {
   return (
@@ -14,8 +15,9 @@ const App = () => {
         <main>
           <Container>
             <Route path='/' component={HomeScreen} exact />
-            <Route path='/judge' component={JudgeScreen} />
-            <Route path='/problem/:id' component={ProblemScreen} />
+            <Route path='/judge' component={JudgeScreen} exact />
+            <Route path='/compiler' component={CompilerScreen} />
+            <Route path='/judge/:id' component={ProblemScreen} />
           </Container>
         </main>
         <Footer />

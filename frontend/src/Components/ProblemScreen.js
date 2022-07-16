@@ -69,7 +69,7 @@ const ProblemScreen = ({ match }) => {
         <Loader />
       ) : (
         <>
-          <Row>
+          <Row className='my-3'>
             <Col md={6}>
               <ListGroup variant='flush'>
                 <ListGroup.Item>

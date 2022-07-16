@@ -30,7 +30,7 @@ const JudgeScreen = () => {
               <Row className='justify-content-center'>
                 <Col className='probContainer' md='4'>
                   <Link
-                    to={`/problem/${problem._id}`}
+                    to={`/judge/${problem._id}`}
                     style={{ textDecoration: 'none' }}
                   >
                     <span className='probName'>{problem.name}</span>
@@ -39,9 +39,9 @@ const JudgeScreen = () => {
                 <Col className='my-3' md='4'>
                   <Badge
                     bg={
-                      problem.difficulty == 'hard'
+                      problem.difficulty === 'hard'
                         ? 'primary'
-                        : problem.difficulty == 'medium'
+                        : problem.difficulty === 'medium'
                         ? 'warning'
                         : 'success'
                     }
