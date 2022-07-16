@@ -1,0 +1,8 @@
+.editor-container {
+  /* margin: 0 2rem; */
+}
+
+.editor-text-area {
+  height: 80vh !important;
+  width: 100% !important;
+}

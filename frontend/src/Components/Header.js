@@ -7,9 +7,11 @@ const Header = () => {
     <>
       <Navbar bg='dark' variant='dark'>
         <Container>
-          <Navbar.Brand href='/'>
-            <FaHome />
-          </Navbar.Brand>
+          <LinkContainer to='/'>
+            <Navbar.Brand>
+              <FaHome />
+            </Navbar.Brand>
+          </LinkContainer>
           <Nav>
             <LinkContainer to='/compiler'>
               <Nav.Link>Compiler</Nav.Link>

@@ -1,4 +1,3 @@
-import { Container } from 'react-bootstrap'
 import Footer from './Components/Footer'
 import Header from './Components/Header'
 import { BrowserRouter as Router, Route } from 'react-router-dom'
@@ -6,6 +5,7 @@ import JudgeScreen from './Components/JudgeScreen'
 import ProblemScreen from './Components/ProblemScreen'
 import HomeScreen from './Components/HomeScreen'
 import CompilerScreen from './Components/CompilerScreen'
+import { Container } from 'react-bootstrap'
 
 const App = () => {
   return (

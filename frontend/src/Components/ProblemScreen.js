@@ -4,6 +4,18 @@ import { Badge, Col, ListGroup, Row } from 'react-bootstrap'
 import { BsFillCaretRightFill } from 'react-icons/bs'
 import Loader from './Loader'
 import qs from 'qs'
+import AceEditor from 'react-ace'
+// import 'ace-builds/src-noconflict/theme-dracula'
+// import 'ace-builds/src-noconflict/mode-java'
+// import 'ace-builds/src-noconflict/mode-javascript'
+// import 'ace-builds/src-noconflict/mode-c_cpp'
+// import 'ace-builds/src-noconflict/mode-csharp'
+// import 'ace-builds/src-noconflict/mode-python'
+// import 'ace-builds/src-noconflict/mode-ruby'
+// import 'ace-builds/src-noconflict/mode-kotlin'
+// import 'ace-builds/src-noconflict/mode-swift'
+import 'ace-builds/src-noconflict/ext-language_tools'
+import 'ace-builds/webpack-resolver'
 import { FcHighPriority, FcOk } from 'react-icons/fc'
 
 import './ProblemScreen.css'
@@ -116,22 +128,33 @@ const ProblemScreen = ({ match }) => {
               </ListGroup>
             </Col>
             <Col md={6}>
-              <label htmlFor='language'>Language:</label>
-              <select
-                value={language}
-                onChange={(e) => setLanguage(e.target.value)}
-              >
-                <option value='js'>JavaScript</option>
-              </select>
               <Row>
-                <textarea
+                {/* <textarea
                   className='code-area'
                   rows='20'
                   value={code}
                   onChange={(e) => {
                     setCode(e.target.value)
                   }}
-                ></textarea>
+                ></textarea> */}
+
+                <AceEditor
+                  className='editor-text-area'
+                  mode='javascript'
+                  theme='solarized_light'
+                  onChange={(e) => {
+                    setCode(e)
+                  }}
+                  editorProps={{ $blockScrolling: true }}
+                  setOptions={{
+                    enableBasicAutocompletion: true,
+                    enableLiveAutocompletion: true,
+                    enableSnippets: true,
+                    fontSize: 20,
+                    showPrintMargin: false,
+                  }}
+                  value={code}
+                />
               </Row>
               {outputLoading ? (
                 <Loader />
@@ -203,14 +226,28 @@ const ProblemScreen = ({ match }) => {
                   </div>
                 )
               )}
-              <div className='button-container'>
-                <button className='outlined' onClick={() => handleRun()}>
-                  <BsFillCaretRightFill />
-                  Run
-                </button>
-                <button className='not-outlined' onClick={() => handleSubmit()}>
-                  Submit
-                </button>
+              <div className='options-wrapper'>
+                <span className='select-container'>
+                  <label htmlFor='language'>Language:</label>
+                  <select
+                    value={language}
+                    onChange={(e) => setLanguage(e.target.value)}
+                  >
+                    <option value='js'>JavaScript</option>
+                  </select>
+                </span>
+                <span className='button-container'>
+                  <button className='outlined' onClick={() => handleRun()}>
+                    <BsFillCaretRightFill />
+                    Run
+                  </button>
+                  <button
+                    className='not-outlined'
+                    onClick={() => handleSubmit()}
+                  >
+                    Submit
+                  </button>
+                </span>
               </div>
             </Col>
           </Row>
