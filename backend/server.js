@@ -3,6 +3,7 @@ import dotenv from 'dotenv'
 import connectDB from './config/dbconfig.js'
 import problemRoutes from './routes/problemsRoute.js'
 import testRoutes from './routes/testRoute.js'
+import compileRoutes from './routes/compileRoute.js'
 import cors from 'cors'
 
 //ESSENTIALS
@@ -31,6 +32,7 @@ app.get('/', (req, res) => {
 })
 app.use('/api/test', testRoutes)
 app.use('/api/problems', problemRoutes)
+app.use('/api/compile', compileRoutes)
 
 const PORT = process.env.PORT || 5000
 

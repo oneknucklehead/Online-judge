@@ -8,16 +8,23 @@ if (!fs.existsSync(path.join(__dirname, '..', 'codes'))) {
   fs.mkdirSync(path.join(__dirname, '..', 'codes'))
 }
 
-const createFile = (language, code, funcName) => {
+const createFile = (language, code, funcName = '', todo = 'judge') => {
   const fileId = uuid()
   const fileName = `${fileId}.${language}`
-  fs.writeFileSync(
-    path.join(__dirname, '..', 'codes', `${fileName}`),
-    code?.toString() +
-      `
+  if (todo === 'judge') {
+    fs.writeFileSync(
+      path.join(__dirname, '..', 'codes', `${fileName}`),
+      code?.toString() +
+        `
     export default ${funcName}
     `
-  )
+    )
+  } else if (todo === 'compile') {
+    fs.writeFileSync(
+      path.join(__dirname, '..', 'codes', `${fileName}`),
+      code?.toString()
+    )
+  }
   return fileName
 }
 
