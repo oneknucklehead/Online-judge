@@ -1,8 +1,36 @@
-.editor-container {
-  /* margin: 0 2rem; */
-}
-
 .editor-text-area {
   height: 80vh !important;
   width: 100% !important;
+}
+.output-container {
+  height: 100%;
+}
+.output-area {
+  height: 90%;
+  background: pink;
+}
+
+.btn-container {
+  display: flex;
+  justify-content: flex-end;
+}
+button {
+  background: #455a64;
+  border: none;
+  color: #fff;
+  padding: 5px;
+  border-radius: 3px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 5rem;
+  font-size: 14px;
+  border: 0.5px solid #455a64;
+  margin: 0 0 0 10px;
+  transition: 0.18s all ease-in-out;
+}
+button:hover {
+  background: #556f7b;
+  border: 0.5px solid #556f7b;
+  transition: 0.18s all ease-in-out;
 }

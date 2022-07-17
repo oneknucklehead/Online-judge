@@ -9,15 +9,15 @@ const __dirname = url.fileURLToPath(new URL('.', import.meta.url))
 const compileCode = async (filePath, input) => {
   try {
     const output = await new Promise((resolve, reject) => {
-      const compileRes = spawn('node', [
-        `${path.join(__dirname, '..', 'codes', filePath)}`,
-      ])
+      // const compileRes = spawn('node', [
+      //   `${path.join(__dirname, '..', 'codes', filePath)}`,
+      // ])
 
-      //JAVA
-      //   const compileRes = spawn('java', [
-      //     '-Dfile.encoding=UTF-8',
-      //     `${path.join(__dirname, `..`, `codes`, filePath)}`,
-      //   ])
+      JAVA
+      const compileRes = spawn('java', [
+        '-Dfile.encoding=UTF-8',
+        `${path.join(__dirname, `..`, `codes`, filePath)}`,
+      ])
       // const compileRes = spawn('python3', [
       //   `${path.join(__dirname, `..`, `codes`, filePath)}`,
       // ])
