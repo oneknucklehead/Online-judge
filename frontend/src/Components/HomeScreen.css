@@ -88,9 +88,13 @@
   -webkit-text-decoration: hotpink double underline;
   text-decoration: hotpink double underline;
 }
+.btn-container {
+  display: flex;
+}
 .btn1 {
   border-radius: 8px;
   padding: 0.5rem 1rem;
+  width: auto;
   margin: 0 1rem 0 0;
   background: none;
   border: 0.5px solid #d9d9d9;
@@ -107,7 +111,7 @@
   border-radius: 8px;
   background: #455a64;
   border: none;
-
+  width: auto;
   font-size: 14px;
   border: 0.5px solid #455a64;
   transition: 0.18s all ease-in-out;

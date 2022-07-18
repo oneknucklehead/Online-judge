@@ -80,178 +80,164 @@ const ProblemScreen = ({ match }) => {
       {loading ? (
         <Loader />
       ) : (
-        <>
-          <Row className='my-3'>
-            <Col md={6}>
-              <ListGroup variant='flush'>
-                <ListGroup.Item>
-                  <div className='problem-title'>{problem.name}</div>
-                </ListGroup.Item>
-                <ListGroup.Item>{problem.statement}</ListGroup.Item>
-                <ListGroup.Item>
-                  Difficulty:{' '}
-                  <Badge
-                    bg={
-                      problem.difficulty === 'hard'
-                        ? 'primary'
-                        : problem.difficulty === 'medium'
-                        ? 'warning'
-                        : 'success'
-                    }
-                  >
-                    {problem.difficulty}
-                  </Badge>
-                </ListGroup.Item>
-                <ListGroup.Item>
-                  {problem?.examples?.map((example, idx) => (
-                    <div key={idx}>
-                      <div className='example-header'>Example {idx + 1}:</div>
-                      <div className='example-container'>
-                        <div>
-                          <p>Input: </p>
-                          <span>{example.Input}</span>
-                        </div>
-                        <div>
-                          <p>Output: </p>
-                          <span>{example.Output}</span>
-                        </div>
-                        {example.Explanation && (
-                          <div>
-                            <p>Explanation: </p>
-                            <span>{example.Explanation}</span>
-                          </div>
-                        )}
+        <Row style={{ marginLeft: 0, marginRight: 0 }}>
+          <Col md={6} style={{ paddingLeft: 0, paddingRight: 0 }}>
+            <ListGroup variant='flush'>
+              <ListGroup.Item>
+                <div className='problem-title'>{problem.name}</div>
+              </ListGroup.Item>
+              <ListGroup.Item>{problem.statement}</ListGroup.Item>
+              <ListGroup.Item>
+                Difficulty:{' '}
+                <Badge
+                  bg={
+                    problem.difficulty === 'hard'
+                      ? 'primary'
+                      : problem.difficulty === 'medium'
+                      ? 'warning'
+                      : 'success'
+                  }
+                >
+                  {problem.difficulty}
+                </Badge>
+              </ListGroup.Item>
+              <ListGroup.Item>
+                {problem?.examples?.map((example, idx) => (
+                  <div key={idx}>
+                    <div className='example-header'>Example {idx + 1}:</div>
+                    <div className='example-container'>
+                      <div>
+                        <p>Input: </p>
+                        <span>{example.Input}</span>
                       </div>
+                      <div>
+                        <p>Output: </p>
+                        <span>{example.Output}</span>
+                      </div>
+                      {example.Explanation && (
+                        <div>
+                          <p>Explanation: </p>
+                          <span>{example.Explanation}</span>
+                        </div>
+                      )}
                     </div>
-                  ))}
-                </ListGroup.Item>
-              </ListGroup>
-            </Col>
-            <Col md={6}>
-              <Row>
-                {/* <textarea
-                  className='code-area'
-                  rows='20'
-                  value={code}
-                  onChange={(e) => {
-                    setCode(e.target.value)
-                  }}
-                ></textarea> */}
-
-                <AceEditor
-                  className='editor-text-area'
-                  mode='javascript'
-                  theme='solarized_light'
-                  onChange={(e) => {
-                    setCode(e)
-                  }}
-                  editorProps={{ $blockScrolling: true }}
-                  setOptions={{
-                    enableBasicAutocompletion: true,
-                    enableLiveAutocompletion: true,
-                    enableSnippets: true,
-                    fontSize: 20,
-                    showPrintMargin: false,
-                  }}
-                  value={code}
-                />
-              </Row>
-              {outputLoading ? (
-                <Loader />
-              ) : (
-                output && (
-                  <div className='output-container'>
-                    <Row>
-                      <Col md={2} className='my-auto'>
-                        Test passed:
-                      </Col>
-                      <Col>
-                        {output &&
-                          output?.testpassed?.map((test, idx) => (
-                            <Col key={idx}>
-                              {idx + 1}
-                              {test === true ? <FcOk /> : <FcHighPriority />}
-                            </Col>
-                          ))}
-                      </Col>
-                    </Row>
-                    <Row className='my-2'>
-                      <Col md={2} sm={2} className='my-auto'>
-                        Your Input:
-                      </Col>
-                      <Col>
-                        <div className='scroll'>
-                          {outputLoading && <Loader />}
-                          {output &&
-                            output.yourInput.map((input, idx) => (
-                              <p key={idx} style={{ margin: 0 }}>
-                                {JSON.stringify(input)}
-                              </p>
-                            ))}
-                        </div>
-                      </Col>
-                    </Row>
-                    <Row className='my-2'>
-                      <Col md={2} sm={2} className='my-auto'>
-                        Output:
-                      </Col>
-                      <Col>
-                        <div className='scroll'>
-                          {outputLoading && <Loader />}
-                          {output &&
-                            output.yourOutput.map((input, idx) => (
-                              <p key={idx} style={{ margin: 0 }}>
-                                {input}
-                              </p>
-                            ))}
-                        </div>
-                      </Col>
-                    </Row>
-                    <Row className='my-2'>
-                      <Col md={2} sm={2} className='my-auto'>
-                        Expected:
-                      </Col>
-                      <Col>
-                        <div className='scroll'>
-                          {outputLoading && <Loader />}
-                          {output &&
-                            output.expected.map((input, idx) => (
-                              <p key={idx} style={{ margin: 0 }}>
-                                {JSON.stringify(input)}
-                              </p>
-                            ))}
-                        </div>
-                      </Col>
-                    </Row>
                   </div>
-                )
-              )}
-              <div className='options-wrapper'>
-                <span className='select-container'>
-                  <label htmlFor='language'>Language:</label>
-                  <select
-                    value={language}
-                    onChange={(e) => setLanguage(e.target.value)}
-                  >
-                    <option value='js'>JavaScript</option>
-                  </select>
-                </span>
-                <span className='button-container'>
-                  <button className='outlined' onClick={() => handleRun()}>
-                    <BsFillCaretRightFill />
-                    Run
-                  </button>
-                  <button
-                    className='not-outlined'
-                    onClick={() => handleSubmit()}
-                  >
-                    Submit
-                  </button>
-                </span>
-              </div>
-            </Col>
-          </Row>
-        </>
+                ))}
+              </ListGroup.Item>
+            </ListGroup>
+          </Col>
+          <Col md={6}>
+            <Row>
+              <AceEditor
+                className='editor-text-area'
+                mode='javascript'
+                theme='solarized_light'
+                onChange={(e) => {
+                  setCode(e)
+                }}
+                editorProps={{ $blockScrolling: true }}
+                setOptions={{
+                  enableBasicAutocompletion: true,
+                  enableLiveAutocompletion: true,
+                  enableSnippets: true,
+                  fontSize: 20,
+                  showPrintMargin: false,
+                }}
+                value={code}
+              />
+            </Row>
+            {outputLoading ? (
+              <Loader />
+            ) : (
+              output && (
+                <div className='output-container'>
+                  <Row>
+                    <Col md={2} className='my-auto'>
+                      Test passed:
+                    </Col>
+                    <Col>
+                      {output &&
+                        output?.testpassed?.map((test, idx) => (
+                          <Col key={idx}>
+                            {idx + 1}
+                            {test === true ? <FcOk /> : <FcHighPriority />}
+                          </Col>
+                        ))}
+                    </Col>
+                  </Row>
+                  <Row className='my-2'>
+                    <Col md={2} sm={2} className='my-auto'>
+                      Your Input:
+                    </Col>
+                    <Col>
+                      <div className='scroll'>
+                        {outputLoading && <Loader />}
+                        {output &&
+                          output.yourInput.map((input, idx) => (
+                            <p key={idx} style={{ margin: 0 }}>
+                              {JSON.stringify(input)}
+                            </p>
+                          ))}
+                      </div>
+                    </Col>
+                  </Row>
+                  <Row className='my-2'>
+                    <Col md={2} sm={2} className='my-auto'>
+                      Output:
+                    </Col>
+                    <Col>
+                      <div className='scroll'>
+                        {outputLoading && <Loader />}
+                        {output &&
+                          output.yourOutput.map((input, idx) => (
+                            <p key={idx} style={{ margin: 0 }}>
+                              {input}
+                            </p>
+                          ))}
+                      </div>
+                    </Col>
+                  </Row>
+                  <Row className='my-2'>
+                    <Col md={2} sm={2} className='my-auto'>
+                      Expected:
+                    </Col>
+                    <Col>
+                      <div className='scroll'>
+                        {outputLoading && <Loader />}
+                        {output &&
+                          output.expected.map((input, idx) => (
+                            <p key={idx} style={{ margin: 0 }}>
+                              {JSON.stringify(input)}
+                            </p>
+                          ))}
+                      </div>
+                    </Col>
+                  </Row>
+                </div>
+              )
+            )}
+            <div className='options-wrapper'>
+              <span className='select-container'>
+                <label htmlFor='language'>Language:</label>
+                <select
+                  value={language}
+                  onChange={(e) => setLanguage(e.target.value)}
+                >
+                  <option value='js'>JavaScript</option>
+                </select>
+              </span>
+              <span className='button-container'>
+                <button className='outlined' onClick={() => handleRun()}>
+                  <BsFillCaretRightFill />
+                  Run
+                </button>
+                <button className='not-outlined' onClick={() => handleSubmit()}>
+                  Submit
+                </button>
+              </span>
+            </div>
+          </Col>
+        </Row>
       )}
     </>
   )

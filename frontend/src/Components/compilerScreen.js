@@ -22,12 +22,17 @@ const CompilerScreen = () => {
   const [language, setLanguage] = useState('java')
   const [output, setOutput] = useState('')
   const [outputLoading, setOutputLoading] = useState(false)
+  let languageList = {
+    java: 'java',
+    javascript: 'js',
+    python: 'py',
+  }
 
   const handleCompile = async () => {
     console.log({ code, language })
     let dataPost = qs.stringify({
       code: code,
-      language: language,
+      language: languageList[language],
       input: '',
     })
     setOutputLoading(true)
@@ -41,11 +46,11 @@ const CompilerScreen = () => {
   }
   return (
     <>
-      <Row>
-        <Col md={9} className='my-4'>
+      <Row style={{ marginLeft: 0, marginRight: 0 }}>
+        <Col md={9} style={{ paddingLeft: 0, paddingRight: 0 }}>
           <AceEditor
             className='editor-text-area'
-            mode='javascript'
+            mode={language}
             theme='solarized_light'
             onChange={(e) => {
               setCode(e)
@@ -61,13 +66,20 @@ const CompilerScreen = () => {
             value={code}
           />
         </Col>
-        <Col md={3}>
+        <Col md={3} style={{ paddingLeft: 0, paddingRight: 0 }}>
           <div className='output-container'>
-            <h3>Output</h3>
+            <h4>Output</h4>
             <div className='output-area'>
-              {outputLoading ? <Loader /> : output && output.output}
+              {outputLoading ? (
+                <Loader />
+              ) : output && output.output ? (
+                output.output
+              ) : (
+                output.err
+              )}
             </div>
-            <div className='btn-container'>
+            <div className='opt-container'>
+              {outputLoading}
               <select
                 name='language'
                 id='language'
@@ -76,10 +88,11 @@ const CompilerScreen = () => {
                   setLanguage(e.target.value)
                 }}
               >
-                <option value='js'>Javascript</option>
+                <option value='javascript'>Javascript</option>
                 <option value='java'>Java</option>
+                <option value='python'>Python</option>
               </select>
-              <button onClick={handleCompile}>
+              <button className='compBtn' onClick={handleCompile}>
                 {outputLoading ? 'Compiling...' : 'Compile'}
               </button>
             </div>

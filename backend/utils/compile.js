@@ -6,18 +6,27 @@ import * as url from 'url'
 
 const __dirname = url.fileURLToPath(new URL('.', import.meta.url))
 
-const compileCode = async (filePath, input) => {
+const compileCode = async (filePath, input, language) => {
   try {
     const output = await new Promise((resolve, reject) => {
-      // const compileRes = spawn('node', [
-      //   `${path.join(__dirname, '..', 'codes', filePath)}`,
-      // ])
+      let compileRes
+      switch (language) {
+        case 'js':
+          compileRes = spawn('node', [
+            `${path.join(__dirname, '..', 'codes', filePath)}`,
+          ])
+          break
+        case 'java':
+          compileRes = spawn('java', [
+            '-Dfile.encoding=UTF-8',
+            `${path.join(__dirname, `..`, `codes`, filePath)}`,
+          ])
+          break
 
-      JAVA
-      const compileRes = spawn('java', [
-        '-Dfile.encoding=UTF-8',
-        `${path.join(__dirname, `..`, `codes`, filePath)}`,
-      ])
+        default:
+          throw new Error('Err: Language not supported')
+      }
+
       // const compileRes = spawn('python3', [
       //   `${path.join(__dirname, `..`, `codes`, filePath)}`,
       // ])
@@ -51,20 +60,20 @@ const compileCode = async (filePath, input) => {
       compileSuccess: true,
       output,
       timestamp: new Date(),
-      language: 'js',
+      language,
     }
   } catch (err) {
     return {
       compileSuccess: false,
       err,
       timestamp: new Date(),
-      language: 'js',
+      language,
     }
   }
 }
 
-const execJS = async (filePath, input) => {
-  return await compileCode(filePath, input)
+const execute = async (filePath, input, language) => {
+  return await compileCode(filePath, input, language)
 }
 
-export default execJS
+export default execute

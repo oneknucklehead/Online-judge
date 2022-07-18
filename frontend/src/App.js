@@ -13,12 +13,12 @@ const App = () => {
       <Router>
         <Header />
         <main>
-          <Container>
-            <Route path='/' component={HomeScreen} exact />
-            <Route path='/judge' component={JudgeScreen} exact />
-            <Route path='/compiler' component={CompilerScreen} />
-            <Route path='/judge/:id' component={ProblemScreen} />
-          </Container>
+          {/* <Container> */}
+          <Route path='/' component={HomeScreen} exact />
+          <Route path='/judge' component={JudgeScreen} exact />
+          <Route path='/compiler' component={CompilerScreen} />
+          <Route path='/judge/:id' component={ProblemScreen} />
+          {/* </Container> */}
         </main>
         <Footer />
       </Router>
