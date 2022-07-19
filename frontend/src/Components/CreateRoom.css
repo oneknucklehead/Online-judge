@@ -1,0 +1,48 @@
+.input-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #000;
+  font-size: 18px;
+  height: 85vh;
+}
+.input-container {
+  /* background: #455a64; */
+  border: 2px solid rgba(34, 34, 34, 0.1);
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  padding: 40px 30px;
+  justify-content: center;
+  align-items: center;
+  width: 400px;
+  max-width: 90%;
+  /* --tw-ring-inset: var(--tw-empty);
+  --tw-ring-offset-width: 0;
+  --tw-ring-offset-color: #fff;
+  --tw-ring-color: rgba(59, 130, 246, 0.5); */
+  --tw-ring-shadow: 0 0 #0000;
+  --tw-ring-offset-shadow: 0 0 #0000;
+  --tw-shadow: 0 2.65546px 95px rgba(0, 0, 0, 0.1);
+  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000),
+    var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
+}
+.input-box {
+  font-size: 14px;
+  width: 100%;
+  outline: none;
+  margin-bottom: 12px;
+  padding: 10px;
+  border: none;
+  background: rgba(34, 34, 34, 0.05);
+  border-radius: 4px;
+}
+.btn-join {
+  border: none;
+  border-radius: 40px;
+  padding: 10px;
+  font-weight: 900;
+  width: 100%;
+  background: #ffdd00;
+  margin-bottom: 12px;
+}

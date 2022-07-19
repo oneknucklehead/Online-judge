@@ -1,0 +1,33 @@
+nav {
+  display: flex;
+  justify-content: center;
+}
+.nav-container {
+  width: 80%;
+  background: #fff;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border: 2px solid rgba(34, 34, 34, 0.1);
+  border-radius: 30px;
+  margin: 20px 0;
+
+  --tw-ring-shadow: 0 0 #0000;
+  --tw-ring-offset-shadow: 0 0 #0000;
+  --tw-shadow: 0 2.65546px 95px rgba(0, 0, 0, 0.1);
+  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000),
+    var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
+}
+.nav-brand {
+  /* padding: 0 20px; */
+  padding-left: 15px;
+
+  margin-left: 1rem;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+.route-container {
+  display: flex;
+  padding-right: 15px;
+}

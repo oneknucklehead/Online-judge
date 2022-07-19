@@ -81,8 +81,12 @@ const ProblemScreen = ({ match }) => {
         <Loader />
       ) : (
         <Row style={{ marginLeft: 0, marginRight: 0 }}>
-          <Col md={6} style={{ paddingLeft: 0, paddingRight: 0 }}>
-            <ListGroup variant='flush'>
+          <Col
+            md={6}
+            // style={{ paddingLeft: 0, paddingRight: 0 }}
+          >
+            <div className='problem-container'>
+              {/* <ListGroup variant='flush'> */}
               <ListGroup.Item>
                 <div className='problem-title'>{problem.name}</div>
               </ListGroup.Item>
@@ -124,7 +128,8 @@ const ProblemScreen = ({ match }) => {
                   </div>
                 ))}
               </ListGroup.Item>
-            </ListGroup>
+              {/* </ListGroup> */}
+            </div>
           </Col>
           <Col md={6}>
             <Row>

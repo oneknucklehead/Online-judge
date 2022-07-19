@@ -47,7 +47,10 @@ const CompilerScreen = () => {
   return (
     <>
       <Row style={{ marginLeft: 0, marginRight: 0 }}>
-        <Col md={9} style={{ paddingLeft: 0, paddingRight: 0 }}>
+        <Col
+          md={9}
+          // style={{ paddingLeft: 0, paddingRight: 0 }}
+        >
           <AceEditor
             className='editor-text-area'
             mode={language}

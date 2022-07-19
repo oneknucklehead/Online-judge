@@ -1,41 +1,32 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Navbar, Container, Nav } from 'react-bootstrap'
 import { LinkContainer } from 'react-router-bootstrap'
 import { FaHome } from 'react-icons/fa'
+import './Header.css'
 const Header = () => {
+  const [toggle, setToggle] = useState(false)
   return (
     <>
-      <Navbar bg='dark' variant='dark'>
-        <Container>
+      <nav>
+        <div className='nav-container'>
           <LinkContainer to='/'>
-            <Navbar.Brand>
+            <span className='nav-brand'>
               <FaHome />
-            </Navbar.Brand>
+            </span>
           </LinkContainer>
-          <Nav>
-            <LinkContainer to='/compiler'>
+          <div className='route-container'>
+            <LinkContainer to='/compiler' style={{ color: '#000' }}>
               <Nav.Link>Compiler</Nav.Link>
             </LinkContainer>
-            <LinkContainer to='/judge'>
+            <LinkContainer to='/judge' style={{ color: '#000' }}>
               <Nav.Link>Online-Judge</Nav.Link>
             </LinkContainer>
-            <LinkContainer to='/login'>
+            <LinkContainer to='/login' style={{ color: '#000' }}>
               <Nav.Link>Login</Nav.Link>
             </LinkContainer>
-          </Nav>
-        </Container>
-      </Navbar>
-
-      {/* <Navbar bg='light' expand='lg'>
-          <Container>
-            <Navbar.Brand href='/judge'>
-              <h2>Online Judge</h2>
-            </Navbar.Brand>
-            <Navbar.Brand href='/compiler'>
-              <h2>Compiler</h2>
-            </Navbar.Brand>
-          </Container>
-        </Navbar> */}
+          </div>
+        </div>
+      </nav>
     </>
   )
 }
