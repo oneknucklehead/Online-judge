@@ -13,8 +13,6 @@
   display: flex;
   flex-direction: column;
   padding: 40px 30px;
-  justify-content: center;
-  align-items: center;
   width: 400px;
   max-width: 90%;
   /* --tw-ring-inset: var(--tw-empty);
@@ -31,7 +29,6 @@
   font-size: 14px;
   width: 100%;
   outline: none;
-  margin-bottom: 12px;
   padding: 10px;
   border: none;
   background: rgba(34, 34, 34, 0.05);
@@ -45,4 +42,8 @@
   width: 100%;
   background: #ffdd00;
   margin-bottom: 12px;
+}
+small {
+  font-size: 12px;
+  color: red;
 }

@@ -1,31 +1,61 @@
 import React, { useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Form } from 'react-bootstrap'
+import { Link, useHistory } from 'react-router-dom'
+import { v4 as uuid } from 'uuid'
 import './CreateRoom.css'
 const CreateRoom = () => {
+  const history = useHistory()
   //Replace username with name field after login route is made
   const [roomId, setRoomId] = useState('')
-  const createRoom = () => {
-    setRoomId()
+  const [username, setUsername] = useState('')
+  const joinRoom = () => {
+    if (!roomId || !username) {
+      return
+    }
+    history.push({
+      pathname: `/compiler/${roomId}`,
+      state: {
+        username,
+      },
+    })
+  }
+  const createRoom = (e) => {
+    setRoomId(uuid())
   }
   return (
     <>
       <div className='input-wrapper'>
         <div className='input-container'>
           <p>Paste your invitation code down below</p>
-          <input
-            type='text'
-            className='input-box'
-            placeholder='Enter Room ID'
-          />
-          <input
-            type='text'
-            className='input-box'
-            placeholder='Enter Guest Username'
-          />
-          <button className='btn-join'>Join</button>
+          <div>
+            <div className={roomId && 'mb-3'}>
+              <input
+                type='text'
+                className='input-box'
+                placeholder='Enter Room ID'
+                onChange={(e) => setRoomId(e.target.value)}
+                value={roomId}
+              />
+              {<small>{!roomId && 'Room ID required'}</small>}
+              {/* add checks for no room id */}
+            </div>
+            <div className={username && 'mb-3'}>
+              <input
+                type='text'
+                className='input-box'
+                placeholder='Enter Guest Username'
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
+              />
+              {!username ? <small>Username required</small> : <small> </small>}
+            </div>
+          </div>
+          <button className='btn-join' onClick={joinRoom}>
+            Join
+          </button>
           <p>
-            Don't have an invite code? Create your{' '}
-            <Link to='' style={{ color: '#000' }}>
+            Don't have an invite code? Create your &nbsp;
+            <Link to={'#'} style={{ color: '#000' }} onClick={createRoom}>
               own room
             </Link>
           </p>

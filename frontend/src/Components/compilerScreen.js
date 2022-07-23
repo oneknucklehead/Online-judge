@@ -16,11 +16,18 @@ import 'ace-builds/webpack-resolver'
 import './CompilerScreen.css'
 import { Row, Col } from 'react-bootstrap'
 import Loader from './Loader'
+import Connected from './Connected'
 
 const CompilerScreen = () => {
   const [code, setCode] = useState('')
   const [language, setLanguage] = useState('java')
   const [output, setOutput] = useState('')
+  const [connectedList, setConnectedList] = useState([
+    { socketId: 1, username: 'lappa' },
+    { socketId: 2, username: 'lelo' },
+    { socketId: 3, username: 'without' },
+    { socketId: 4, username: 'lasun' },
+  ])
   const [outputLoading, setOutputLoading] = useState(false)
   let languageList = {
     java: 'java',
@@ -47,8 +54,14 @@ const CompilerScreen = () => {
   return (
     <>
       <Row style={{ marginLeft: 0, marginRight: 0 }}>
+        <Col md={2}>
+          Connected users:
+          {connectedList.map((connected) => (
+            <Connected key={connected.socketId} username={connected.username} />
+          ))}
+        </Col>
         <Col
-          md={9}
+          md={7}
           // style={{ paddingLeft: 0, paddingRight: 0 }}
         >
           <AceEditor
