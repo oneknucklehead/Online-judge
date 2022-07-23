@@ -2,7 +2,7 @@
   height: 75vh !important;
   width: 100% !important;
 }
-.output-container {
+.comp-output-container {
   height: 75vh;
   border: 2px solid rgba(34, 34, 34, 0.1);
   border-radius: 4px;
@@ -45,5 +45,60 @@
 .compBtn:hover {
   background: #556f7b;
   border: 0.5px solid #556f7b;
+  transition: 0.18s all ease-in-out;
+}
+.aside {
+  display: flex;
+  flex-direction: column;
+  color: #000;
+  height: 75vh;
+  padding: 10px;
+}
+.aside-inner > h5 {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+.aside-inner {
+  flex: 1;
+}
+.connected-container {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-evenly;
+  gap: 20px;
+}
+
+.copy-btn {
+  width: 100%;
+  border: none;
+  background: #ffdd00;
+  font-weight: bold;
+  padding: 10px;
+  border-radius: 5px;
+  transition: 0.18s all ease-in-out;
+}
+.copy-btn:hover {
+  background: #edce02;
+  transition: 0.18s all ease-in-out;
+}
+.leave-btn {
+  width: 100%;
+  padding: 10px;
+  background: #fff;
+  border: 2px solid rgba(34, 34, 34, 0.1);
+  border-radius: 5px;
+  margin-top: 10px;
+  font-weight: bold;
+  --tw-ring-shadow: 0 0 #0000;
+  --tw-ring-offset-shadow: 0 0 #0000;
+  --tw-shadow: 0 2.65546px 95px rgba(0, 0, 0, 0.1);
+  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000),
+    var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
+  transition: 0.18s all ease-in-out;
+}
+.leave-btn:hover {
+  background: #f0f0f0;
   transition: 0.18s all ease-in-out;
 }

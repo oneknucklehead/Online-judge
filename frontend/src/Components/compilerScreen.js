@@ -17,6 +17,7 @@ import './CompilerScreen.css'
 import { Row, Col } from 'react-bootstrap'
 import Loader from './Loader'
 import Connected from './Connected'
+import './CompilerScreen.css'
 
 const CompilerScreen = () => {
   const [code, setCode] = useState('')
@@ -55,10 +56,21 @@ const CompilerScreen = () => {
     <>
       <Row style={{ marginLeft: 0, marginRight: 0 }}>
         <Col md={2}>
-          Connected users:
-          {connectedList.map((connected) => (
-            <Connected key={connected.socketId} username={connected.username} />
-          ))}
+          <div className='aside'>
+            <div className='aside-inner'>
+              <h5>Connected users:</h5>
+              <div className='connected-container'>
+                {connectedList.map((connected) => (
+                  <Connected
+                    key={connected.socketId}
+                    username={connected.username}
+                  />
+                ))}
+              </div>
+            </div>
+            <button className='copy-btn'>Copy Room Id</button>
+            <button className='leave-btn'>Leave</button>
+          </div>
         </Col>
         <Col
           md={7}
@@ -83,7 +95,7 @@ const CompilerScreen = () => {
           />
         </Col>
         <Col md={3} style={{ paddingLeft: 0, paddingRight: 0 }}>
-          <div className='output-container'>
+          <div className='comp-output-container'>
             <h4>Output</h4>
             <div className='output-area'>
               {outputLoading ? (

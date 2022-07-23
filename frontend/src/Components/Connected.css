@@ -1,0 +1,13 @@
+.connected {
+  /* background: salmon;
+  border: 1px solid black; */
+  display: flex;
+  flex-direction: column;
+  /* justify-content: center; */
+  align-items: center;
+}
+.username {
+  margin-top: 5px;
+  font-size: 13px;
+  font-weight: bold;
+}
