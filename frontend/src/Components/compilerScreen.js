@@ -1,14 +1,5 @@
-import React, { useState } from 'react'
-import AceEditor from 'react-ace'
-// import 'ace-builds/src-noconflict/theme-dracula'
-import 'ace-builds/src-noconflict/mode-java'
-import 'ace-builds/src-noconflict/mode-javascript'
-// import 'ace-builds/src-noconflict/mode-c_cpp'
-// import 'ace-builds/src-noconflict/mode-csharp'
-// import 'ace-builds/src-noconflict/mode-python'
-// import 'ace-builds/src-noconflict/mode-ruby'
-// import 'ace-builds/src-noconflict/mode-kotlin'
-// import 'ace-builds/src-noconflict/mode-swift'
+import React, { useEffect, useRef, useState } from 'react'
+
 import qs from 'qs'
 import axios from 'axios'
 import 'ace-builds/src-noconflict/ext-language_tools'
@@ -18,23 +9,81 @@ import { Row, Col } from 'react-bootstrap'
 import Loader from './Loader'
 import Connected from './Connected'
 import './CompilerScreen.css'
+import { initSocket } from '../socket.js'
+import { useHistory, useLocation, useParams } from 'react-router-dom'
+import toast from 'react-hot-toast'
+import ACTIONS from '../Actions.js'
+import Editor from './Editor'
 
 const CompilerScreen = () => {
+  const socketRef = useRef(null)
+  const location = useLocation()
+  const history = useHistory()
   const [code, setCode] = useState('')
   const [language, setLanguage] = useState('java')
   const [output, setOutput] = useState('')
-  const [connectedList, setConnectedList] = useState([
-    { socketId: 1, username: 'lappa' },
-    { socketId: 2, username: 'lelo' },
-    { socketId: 3, username: 'without' },
-    { socketId: 4, username: 'lasun' },
-  ])
+  const [connectedList, setConnectedList] = useState([])
+  const { roomId } = useParams()
+
   const [outputLoading, setOutputLoading] = useState(false)
   let languageList = {
     java: 'java',
     javascript: 'js',
     python: 'py',
   }
+
+  useEffect(() => {
+    const init = () => {}
+    init()
+  }, [])
+  useEffect(() => {
+    const init = async () => {
+      socketRef.current = await initSocket()
+      socketRef.current.on('connect_error', (err) => handleErrors(err))
+      socketRef.current.on('connect_failed', (err) => handleErrors(err))
+
+      function handleErrors(e) {
+        console.log('socket error', e)
+        toast.error('Socket connection failed, try again later.')
+        history.push('/')
+      }
+
+      socketRef.current.emit(ACTIONS.JOIN, {
+        roomId,
+        username: location.state?.username,
+      })
+
+      // Listening for joined event
+      socketRef.current.on(
+        ACTIONS.JOINED,
+        ({ clients, username, socketId }) => {
+          if (username !== location.state?.username) {
+            toast.success(`${username} joined the room.`)
+            console.log(`${username} joined`)
+          }
+          setConnectedList(clients)
+          // socketRef.current.emit(ACTIONS.SYNC_CODE, {
+          //   code: codeRef.current,
+          //   socketId,
+          // })
+        }
+      )
+
+      // Listening for disconnected
+      socketRef.current.on(ACTIONS.DISCONNECTED, ({ socketId, username }) => {
+        toast.success(`${username} left the room.`)
+        setConnectedList((prev) => {
+          return prev.filter((client) => client.socketId !== socketId)
+        })
+      })
+    }
+    init()
+    // return () => {
+    //   socketRef.current.disconnect()
+    //   socketRef.current.off(ACTIONS.JOINED)
+    //   socketRef.current.off(ACTIONS.DISCONNECTED)
+    // }
+  }, [])
 
   const handleCompile = async () => {
     console.log({ code, language })
@@ -45,13 +94,14 @@ const CompilerScreen = () => {
     })
     setOutputLoading(true)
     const { data } = await axios.post(
-      'http://localhost:5000/api/compile',
+      `http://localhost:5000/api/compile`,
       dataPost
     )
     console.log(data)
     setOutput({ ...data })
     setOutputLoading(false)
   }
+  if (!location.state) history.push('/')
   return (
     <>
       <Row style={{ marginLeft: 0, marginRight: 0 }}>
@@ -76,22 +126,12 @@ const CompilerScreen = () => {
           md={7}
           // style={{ paddingLeft: 0, paddingRight: 0 }}
         >
-          <AceEditor
-            className='editor-text-area'
-            mode={language}
-            theme='solarized_light'
-            onChange={(e) => {
-              setCode(e)
-            }}
-            editorProps={{ $blockScrolling: true }}
-            setOptions={{
-              enableBasicAutocompletion: true,
-              enableLiveAutocompletion: true,
-              enableSnippets: true,
-              fontSize: 20,
-              showPrintMargin: false,
-            }}
-            value={code}
+          <Editor
+            code={code}
+            setCode={setCode}
+            language={language}
+            socketRef={socketRef}
+            roomId={roomId}
           />
         </Col>
         <Col md={3} style={{ paddingLeft: 0, paddingRight: 0 }}>

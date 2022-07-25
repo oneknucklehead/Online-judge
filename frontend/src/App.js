@@ -6,10 +6,14 @@ import ProblemScreen from './Components/ProblemScreen'
 import HomeScreen from './Components/HomeScreen'
 import CompilerScreen from './Components/CompilerScreen'
 import CreateRoom from './Components/CreateRoom'
+import { Toaster } from 'react-hot-toast'
 
 const App = () => {
   return (
     <>
+      <div>
+        <Toaster position='top-right' containerStyle={{ marginTop: '120px' }} />
+      </div>
       <Router>
         <Header />
         <main>

@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Form } from 'react-bootstrap'
+import toast from 'react-hot-toast'
 import { Link, useHistory } from 'react-router-dom'
 import { v4 as uuid } from 'uuid'
 import './CreateRoom.css'
@@ -10,6 +10,7 @@ const CreateRoom = () => {
   const [username, setUsername] = useState('')
   const joinRoom = () => {
     if (!roomId || !username) {
+      toast.error('Room Id and username is a required field')
       return
     }
     history.push({
@@ -18,9 +19,11 @@ const CreateRoom = () => {
         username,
       },
     })
+    // toast.success(`Joined: ${roomId}`)
   }
   const createRoom = (e) => {
     setRoomId(uuid())
+    toast.success('Room created')
   }
   return (
     <>

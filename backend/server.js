@@ -5,11 +5,16 @@ import problemRoutes from './routes/problemsRoute.js'
 import testRoutes from './routes/testRoute.js'
 import compileRoutes from './routes/compileRoute.js'
 import cors from 'cors'
+import http from 'http'
+import { Server } from 'socket.io'
+import ACTIONS from '../frontend/src/Actions.js'
+const app = express()
+const server = http.createServer(app)
+const io = new Server(server)
 
 //ESSENTIALS
 dotenv.config()
 connectDB()
-const app = express()
 app.use(cors())
 app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
@@ -34,9 +39,56 @@ app.use('/api/test', testRoutes)
 app.use('/api/problems', problemRoutes)
 app.use('/api/compile', compileRoutes)
 
+//add this to database
+let userSocketMap = {}
+
+function getAllConnectedClients(roomId) {
+  return Array.from(io.sockets.adapter.rooms.get(roomId) || []).map(
+    (socketId) => {
+      return {
+        socketId,
+        username: userSocketMap[socketId],
+      }
+    }
+  )
+}
+
+io.on('connection', (socket) => {
+  console.log('socket connected', socket.id)
+
+  socket.on(ACTIONS.JOIN, ({ roomId, username }) => {
+    userSocketMap[socket.id] = username
+    socket.join(roomId)
+    const clients = getAllConnectedClients(roomId)
+    clients.forEach(({ socketId }) => {
+      io.to(socketId).emit(ACTIONS.JOINED, {
+        clients,
+        username,
+        socketId: socket.id,
+      })
+    })
+  })
+
+  socket.on(ACTIONS.CODE_CHANGE, ({ roomId, code }) => {
+    socket.in(roomId).emit(ACTIONS.CODE_CHANGE, { code })
+  })
+
+  socket.on('disconnecting', () => {
+    const rooms = [...socket.rooms]
+    rooms.forEach((roomId) => {
+      socket.in(roomId).emit(ACTIONS.DISCONNECTED, {
+        socketId: socket.id,
+        username: userSocketMap[socket.id],
+      })
+    })
+    delete userSocketMap[socket.id]
+    socket.leave()
+  })
+})
+
 const PORT = process.env.PORT || 5000
 
-app.listen(
+server.listen(
   PORT,
   console.log(`server running in ${process.env.MODE} mode on port ${PORT}`)
 )
