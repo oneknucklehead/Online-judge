@@ -1,10 +1,9 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { Nav } from 'react-bootstrap'
 import { LinkContainer } from 'react-router-bootstrap'
 import { FaHome } from 'react-icons/fa'
 import './Header.css'
 const Header = () => {
-  // const [toggle, setToggle] = useState(false)
   return (
     <>
       <nav>
@@ -21,9 +20,9 @@ const Header = () => {
             <LinkContainer to='/judge' style={{ color: '#000' }}>
               <Nav.Link>Online-Judge</Nav.Link>
             </LinkContainer>
-            <LinkContainer to='/login' style={{ color: '#000' }}>
+            {/* <LinkContainer to='/login' style={{ color: '#000' }}>
               <Nav.Link>Login</Nav.Link>
-            </LinkContainer>
+            </LinkContainer> */}
           </div>
         </div>
       </nav>

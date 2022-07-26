@@ -136,7 +136,7 @@ const ProblemScreen = ({ match }) => {
               <AceEditor
                 className='editor-text-area'
                 mode='javascript'
-                theme='solarized_light'
+                theme='pastel_on_dark'
                 onChange={(e) => {
                   setCode(e)
                 }}

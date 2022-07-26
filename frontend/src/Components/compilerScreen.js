@@ -2,9 +2,6 @@ import React, { useEffect, useRef, useState } from 'react'
 
 import qs from 'qs'
 import axios from 'axios'
-import 'ace-builds/src-noconflict/ext-language_tools'
-import 'ace-builds/webpack-resolver'
-import './CompilerScreen.css'
 import { Row, Col } from 'react-bootstrap'
 import Loader from './Loader'
 import Connected from './Connected'
@@ -14,7 +11,7 @@ import { useHistory, useLocation, useParams } from 'react-router-dom'
 import toast from 'react-hot-toast'
 import ACTIONS from '../Actions.js'
 import Editor from './Editor'
-import { io } from 'socket.io-client'
+import { LinkContainer } from 'react-router-bootstrap'
 
 const CompilerScreen = () => {
   const socketRef = useRef(null)
@@ -74,11 +71,11 @@ const CompilerScreen = () => {
       })
     }
     init()
-    // return () => {
-    //   socketRef.current?.disconnect()
-    //   socketRef?.current?.off(ACTIONS.JOINED)
-    //   socketRef?.current?.off(ACTIONS.DISCONNECTED)
-    // }
+    return () => {
+      socketRef.current?.disconnect()
+      socketRef?.current?.off(ACTIONS.JOINED)
+      socketRef?.current?.off(ACTIONS.DISCONNECTED)
+    }
   }, [])
 
   const handleCompile = async () => {
@@ -97,6 +94,16 @@ const CompilerScreen = () => {
     setOutput({ ...data })
     setOutputLoading(false)
   }
+  const copyId = async () => {
+    try {
+      await navigator.clipboard.writeText(roomId)
+      toast.success('Copied to clipboard')
+    } catch (error) {
+      toast.error('Error while copying roomId')
+      console.log(error)
+    }
+  }
+
   if (!location.state) history.push('/')
   return (
     <>
@@ -114,8 +121,12 @@ const CompilerScreen = () => {
                 ))}
               </div>
             </div>
-            <button className='copy-btn'>Copy Room Id</button>
-            <button className='leave-btn'>Leave</button>
+            <button className='copy-btn' onClick={copyId}>
+              Copy Room Id
+            </button>
+            <LinkContainer to='/'>
+              <button className='leave-btn'>Leave</button>
+            </LinkContainer>
           </div>
         </Col>
         <Col
