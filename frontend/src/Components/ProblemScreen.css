@@ -1,3 +1,7 @@
+.editor-text-area {
+  height: 75vh !important;
+  width: 100% !important;
+}
 .problem-title {
   font-size: 20px;
   font-weight: bold;

@@ -1,7 +1,10 @@
-.editor-text-area {
-  height: 75vh !important;
-  width: 100% !important;
+.CodeMirror {
+  min-height: 75vh;
+  font-size: 20px;
+  line-height: 1.6;
+  padding-top: 20px;
 }
+
 .comp-output-container {
   height: 75vh;
   border: 2px solid rgba(34, 34, 34, 0.1);

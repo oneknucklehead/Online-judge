@@ -14,28 +14,24 @@ import { useHistory, useLocation, useParams } from 'react-router-dom'
 import toast from 'react-hot-toast'
 import ACTIONS from '../Actions.js'
 import Editor from './Editor'
+import { io } from 'socket.io-client'
 
 const CompilerScreen = () => {
   const socketRef = useRef(null)
+  const codeRef = useRef(null)
   const location = useLocation()
   const history = useHistory()
   const [code, setCode] = useState('')
-  const [language, setLanguage] = useState('java')
+  const [language, setLanguage] = useState('javascript')
   const [output, setOutput] = useState('')
   const [connectedList, setConnectedList] = useState([])
   const { roomId } = useParams()
 
   const [outputLoading, setOutputLoading] = useState(false)
   let languageList = {
-    java: 'java',
     javascript: 'js',
-    python: 'py',
   }
 
-  useEffect(() => {
-    const init = () => {}
-    init()
-  }, [])
   useEffect(() => {
     const init = async () => {
       socketRef.current = await initSocket()
@@ -62,10 +58,10 @@ const CompilerScreen = () => {
             console.log(`${username} joined`)
           }
           setConnectedList(clients)
-          // socketRef.current.emit(ACTIONS.SYNC_CODE, {
-          //   code: codeRef.current,
-          //   socketId,
-          // })
+          socketRef.current.emit(ACTIONS.SYNC_CODE, {
+            code: codeRef.current,
+            socketId,
+          })
         }
       )
 
@@ -79,9 +75,9 @@ const CompilerScreen = () => {
     }
     init()
     // return () => {
-    //   socketRef.current.disconnect()
-    //   socketRef.current.off(ACTIONS.JOINED)
-    //   socketRef.current.off(ACTIONS.DISCONNECTED)
+    //   socketRef.current?.disconnect()
+    //   socketRef?.current?.off(ACTIONS.JOINED)
+    //   socketRef?.current?.off(ACTIONS.DISCONNECTED)
     // }
   }, [])
 
@@ -126,12 +122,22 @@ const CompilerScreen = () => {
           md={7}
           // style={{ paddingLeft: 0, paddingRight: 0 }}
         >
-          <Editor
+          {/* <Editor
             code={code}
             setCode={setCode}
             language={language}
             socketRef={socketRef}
             roomId={roomId}
+          /> */}
+          <Editor
+            socketRef={socketRef}
+            roomId={roomId}
+            value={code}
+            onCodeChange={(code) => {
+              codeRef.current = code
+              setCode(code)
+            }}
+            language={language}
           />
         </Col>
         <Col md={3} style={{ paddingLeft: 0, paddingRight: 0 }}>
@@ -157,8 +163,6 @@ const CompilerScreen = () => {
                 }}
               >
                 <option value='javascript'>Javascript</option>
-                <option value='java'>Java</option>
-                <option value='python'>Python</option>
               </select>
               <button className='compBtn' onClick={handleCompile}>
                 {outputLoading ? 'Compiling...' : 'Compile'}
