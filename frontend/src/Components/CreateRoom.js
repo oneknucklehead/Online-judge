@@ -19,7 +19,6 @@ const CreateRoom = () => {
         username,
       },
     })
-    // toast.success(`Joined: ${roomId}`)
   }
   const createRoom = (e) => {
     setRoomId(uuid())
@@ -40,7 +39,6 @@ const CreateRoom = () => {
                 value={roomId}
               />
               {<small>{!roomId && 'Room ID required'}</small>}
-              {/* add checks for no room id */}
             </div>
             <div className={username && 'mb-3'}>
               <input

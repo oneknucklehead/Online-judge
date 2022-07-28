@@ -20,6 +20,7 @@ const Header = () => {
             <LinkContainer to='/judge' style={{ color: '#000' }}>
               <Nav.Link>Online-Judge</Nav.Link>
             </LinkContainer>
+            {/* implement authorization here */}
             {/* <LinkContainer to='/login' style={{ color: '#000' }}>
               <Nav.Link>Login</Nav.Link>
             </LinkContainer> */}

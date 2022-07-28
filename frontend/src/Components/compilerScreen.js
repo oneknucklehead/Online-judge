@@ -1,5 +1,4 @@
 import React, { useEffect, useRef, useState } from 'react'
-
 import qs from 'qs'
 import axios from 'axios'
 import { Row, Col } from 'react-bootstrap'
@@ -129,17 +128,7 @@ const CompilerScreen = () => {
             </LinkContainer>
           </div>
         </Col>
-        <Col
-          md={7}
-          // style={{ paddingLeft: 0, paddingRight: 0 }}
-        >
-          {/* <Editor
-            code={code}
-            setCode={setCode}
-            language={language}
-            socketRef={socketRef}
-            roomId={roomId}
-          /> */}
+        <Col md={7}>
           <Editor
             socketRef={socketRef}
             roomId={roomId}
